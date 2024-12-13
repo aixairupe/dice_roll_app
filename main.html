@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice-roll App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amaranth:wght@400;700&family=Flamenco:wght@300;400&family=Josefin+Sans:wght@600&display=swap" rel="stylesheet">>
+</head>
+<body>
+    <h1 class="titulo">¡Bienvenidx a Dice-roll App!</h1>
+    <h2 class="subtitulo">Configurá tu tirada</h2>
+    <p class="instrucciones">¡Customizá tu tirada! <br> Para una sola tirada simple, apretá el botón del dado que querés tirar. <br> Si querés tirar varias veces el mismo dado, o elegir varios dados diferentes para la misma tirada, habilitá las Tiradas múltiples. <br> Usá reset para borrar todo.</p>
+    <main>
+        <div class="dados">
+
+            <div class="tarjeta_dado" id="D4">
+                <img src="img/D4.png" alt="dado de 4 caras">
+                <button class="boton_elegir" id="1D4">D4</button>
+                <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D4" min="0"></p>
+            </div>
+
+            <div class="tarjeta_dado" id="D6">
+                <img src="img/D6.png" alt="dado de 6 caras">
+                <button class="boton_elegir" id="1D6">D6</button>
+                <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D6" min="0"></p>
+            </div>
+
+            <div class="tarjeta_dado" id="D8">
+                <img src="img/D8.png" alt="dado de 8 caras">
+                <button class="boton_elegir" id="1D8">D8</button>
+                <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D8" min="0"></p>
+            </div>
+
+            <div class="tarjeta_dado" id="D10">
+                <img src="img/D10.png" alt="dado de 10 caras">
+                <button class="boton_elegir" id="1D10">D10</button>
+                <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D10" min="0"></p>
+            </div>
+
+            <div class="tarjeta_dado" id="D12">
+                <img src="img/D12.png" alt="dado de 12 caras">
+                <button class="boton_elegir" id="1D12">D12</button>
+                <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D12" min="0"></p>
+            </div>
+
+            <div class="tarjeta_dado" id="D20">
+                <img src="img/D20.png" alt="dado de 20 caras">
+                <button class="boton_elegir" id="1D20">D20</button>
+                <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D20" min="0"></p>
+            </div>
+
+            <div class="tarjeta_dado" id="D100">
+                <img id="img_d100" src="img/D100.png" alt="dado porcentual">
+                <button class="boton_elegir" id="1D100">D100</button>
+                <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D100" min="0"></p>
+            </div>
+        </div>
+
+        <div class="menu_resultados">
+            <h4 class="subtitulo">Preferencias</h4>
+            
+            <div class="menu">
+                <p>
+                    <input type="checkbox" name="sumar_resultados" id="sumatoria">Sumar resultados
+                </p>
+                <div id="num_objetivo">
+                    <p>
+                        <input type="radio" name="n_o" id="mayor">Mayor que...
+                        <input type="radio" name="n_o" id="menor">Menor que...
+                    </p>
+                    <p>
+                        Ingresá el valor: <input type="number" name="ingresa_valor" id="valor_objetivo" min="0">
+                    </p> 
+                </div>
+                <p>Modificadores: <input type="number" name="modificadores" id="mods"></p>
+            </div>
+            <p><input type="checkbox" id="tiradas_multiples" name="tiradas_multiples">Tirar varios dados</p>
+            <button id="dice_roll">¡Tirar dados!</button>
+
+            <div class="resultado">
+                <h3>Tirada: </h3>
+                <div id="resultado_total"></div>
+            </div>
+
+            <button type="reset" id="reset">¡Reset!</button>
+        </div>
+        
+    </main>
+
+    <script href="./index.js"></script>
+</body>
+</html>

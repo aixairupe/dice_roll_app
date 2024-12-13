@@ -1,0 +1,152 @@
+/*Estilos generales*/
+
+* {
+    box-sizing: border-box;
+}
+
+
+:root {
+    --main-pink: #F5AFB7;
+    --main-dark-pink: #E1858E;
+    --main-grey-green: #6F7560;
+    --main-lila: #684954;
+    --main-creamy: #F1E8DC;
+    --main-light-green: #56c789;
+    --main-dark-green: #48463F;
+    --main-bordeaux: #4D2128;
+}
+
+
+body {
+    background-color: var(--main-creamy);
+    display: grid;
+    margin: 15px;
+    padding: 15px;
+    font-family: "Flamenco", serif;
+}
+
+main {
+    display: grid;
+    padding: 15px;
+    gap: 15px;
+}
+
+/*Títulos, subtítulos y sepaciones*/
+
+title, .titulo, .subtitulo {
+    font-family: "Amaranth", sans-serif;
+    font-size: xx-large;
+    justify-self: center;
+}
+
+.instrucciones, .resultado, p, ul, h4, h3{
+    justify-self: center;
+    margin: 5px;
+    font-size: larger;
+}
+
+
+/*Botones*/
+
+button{
+    background-color: var(--main-creamy);
+    border-radius: 8px;
+    justify-self: center;
+    width: 75px;
+    height: 35px;
+    cursor: pointer;
+    border: outset;
+    font-family: "Josefin Sans", serif;
+}
+
+#dice_roll, #reset {
+    background-color: var(--main-dark-pink);
+    color: var(--main-lila);
+    width: auto;
+    height: auto;
+    font-size: x-large;
+}
+
+
+/*Daditos*/
+
+.dados{
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 225px), 3fr));
+    gap: 20px;
+    grid-auto-flow: dense;
+    background-color: var(--main-grey-green);
+    border-radius: 15px;
+    padding: 15px;
+    border: 3px inset var(--main-dark-green);
+}
+
+.tarjeta_dado{
+    display: grid;
+    padding: 10px;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    background-color: var(--main-pink);
+    border-radius: 10px;
+    border: outset;
+}
+
+img{
+    width: 150px;
+    max-height: auto;
+    padding: 20px;
+}
+
+#img_d100{
+    width: 175px;
+    max-height: auto;
+}
+
+input{
+    max-width: 70px;
+}
+
+.boton_elegir{
+    max-width: 70px;
+}
+
+/*Configuraciones de la tirada*/
+
+.menu_resultados {
+    display: grid;
+    gap: 15px;
+}
+
+.menu, .resultado{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 3px outset var(--main-dark-green);
+    border-radius: 10px;
+    padding: 20px;
+    min-width: 75%;
+    font-size: larger;
+    gap: 15%;
+}
+
+.resultado{
+    display: grid;
+    gap: 10px;
+}
+
+#num_objetivo {
+    display: flex;
+    align-self: center;
+    
+}
+
+.resultado_valores, .resultado_suma, .resultado_exitos, #resultado_dado{
+    font-size:x-large;
+    padding: 10px;
+    font-family: "Josefin Sans", serif;
+}
