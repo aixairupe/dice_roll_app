@@ -18,7 +18,8 @@ class Dado {
         parseInt(valorObjetivoElement.value) : null
         
         // Verificar si el usuario ingresó un valor objetivo pero no seleccionó "mayor" o "menor"
-        if (valorObjetivo !== null && valorObjetivo > 0 && !mayor && !menor) {
+        if ((valorObjetivo !== null && valorObjetivo > 0 && !mayor && !menor) || 
+            ((mayor || menor) && (valorObjetivo === null || valorObjetivo <= 0))) {
             alert("No olvides eleccionar si la tirada debe ser mayor o menor que el número objetivo.");
             return // Detener ejecución si no marcó ninguna opción
         }
@@ -40,7 +41,7 @@ class Dado {
         document.getElementById("resultado_total").innerHTML = resultadoHTML
     
         //Deslizar hacia abajo
-        document.getElementById("resultado_total").scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById("resultado_total").scrollIntoView({ behavior: 'smooth', block: 'center' })
 
     }
 
@@ -48,28 +49,20 @@ class Dado {
         let checkbox = document.getElementById("sumatoria")
         let resultados = [];
         let suma = 0
-        let totalGlobalLocal = 0 // Suma total acumulada de todos los dados
-        let menor = document.getElementById("menor").checked
-        let mayor = document.getElementById("mayor").checked
-        let valorObjetivoElement = document.getElementById("valor_objetivo")
         let modificador = parseInt(document.getElementById("mods").value) || 0
-        
-        let valorObjetivo = valorObjetivoElement && valorObjetivoElement.value !== "" ?  //3er commit
-        parseInt(valorObjetivoElement.value) : null
+    
+         // Obtener valores compartidos
+        const { menor, mayor, valorObjetivo } = obtenerValoresCompartidos()
 
-        if (!valorObjetivoElement || valorObjetivoElement.value === "") {
-            valorObjetivoElement = null
-        }
-        
         let detalleExitos = []
     
-        if (this.veces > 0) { // Verificar si la cantidad de veces es mayor que 0
+        if (this.veces > 0) {
             for (let index = 0; index < this.veces; index++) {
                 let resultado = Math.floor((Math.random() * this.caras) + 1)
                 resultado += modificador
                 resultados.push(resultado)
                 suma += resultado
-    
+
                 if (valorObjetivo !== null && valorObjetivo > 0) {
                     let exito = (mayor && resultado >= valorObjetivo) || 
                                 (menor && resultado <= valorObjetivo)
@@ -79,21 +72,12 @@ class Dado {
                 }
             }
 
-            // Verificar si el usuario ingresó un valor objetivo pero no seleccionó "mayor" o "menor"
-            if (valorObjetivo > 0 && !mayor && !menor) {
-                alert("No olvides eleccionar si la tirada debe ser mayor o menor que el número objetivo.");
-                return // Detener ejecución si no marcó ninguna opción
-            } else if (mayor || menor && valorObjetivo == 0){
-                alert("No olvides eleccionar si la tirada debe ser mayor o menor que el número objetivo.");
-                return
-            }
-    
             // Construir HTML para mostrar resultados con todas las tiradas
             let resultadoHTML = `
-                <div class="resultado-dado">
-                    <p class="resultado_header">Resultados del D${this.caras}:</p>
-                    <p class="resultado_valores">${resultados.join(", ")}</p>`
-    
+            <div class="resultado-dado">
+                <p class="resultado_header">Resultados del D${this.caras}:</p>
+                <p class="resultado_valores">${resultados.join(", ")}</p>`
+
             if (checkbox.checked) {
                 resultadoHTML += `
                     <p class="resultado_suma">En total suman: ${suma}</p>`
@@ -107,13 +91,12 @@ class Dado {
                     <p class="resultado_detallado">Recuento de tiradas:</p>
                     <p class="resultado_exitos">${detalleExitos.join("<br>")}</p>`
             }
-    
+
             resultadoHTML += `</div>`
 
             document.getElementById("resultado_total").innerHTML += resultadoHTML
 
             document.getElementById("resultado_total").scrollIntoView({ behavior: 'smooth', block: 'center' })
-
         }
     }
 }
@@ -179,6 +162,19 @@ document.getElementById("D12").querySelector('.boton_elegir').addEventListener("
 document.getElementById("D20").querySelector('.boton_elegir').addEventListener("click", function() { D20.tirarDado(); }) 
 document.getElementById("D100").querySelector('.boton_elegir').addEventListener("click", function() { D100.tirarDado(); })
 
+// Función para obtener y validar los valores comunes
+function obtenerValoresCompartidos() {
+    const menor = document.getElementById("menor").checked;
+    const mayor = document.getElementById("mayor").checked;
+    const valorObjetivoElement = document.getElementById("valor_objetivo");
+
+    const valorObjetivo = valorObjetivoElement && valorObjetivoElement.value !== "" ? 
+        parseInt(valorObjetivoElement.value) : null;
+
+    return { menor, mayor, valorObjetivo };
+}
+
+
 // TIRAR DADOS - Asignar el botón a la función de tirada múltiple
 document.getElementById("dice_roll").addEventListener("click", function() {
     document.getElementById("resultado_total").innerHTML = "" // Limpiar resultados previos
@@ -192,14 +188,31 @@ document.getElementById("dice_roll").addEventListener("click", function() {
     D20.veces = parseInt(document.getElementById("veces_D20").value) || 0
     D100.veces = parseInt(document.getElementById("veces_D100").value) || 0
 
+    //Lista de dados
+    const dados = [D4, D6, D8, D10, D12, D20, D100];
+    // Verificar si al menos un dado tiene un valor > 0 antes de ejecutar
+    const hayTiradas = dados.some(dado => dado.veces > 0);
+
+    if (!hayTiradas) {
+        alert("Por favor, selecciona al menos un dado con un número de tiradas mayor que 0.");
+        return; // Detener ejecución si no hay tiradas configuradas
+    }
+
+    // Obtener valores compartidos
+    const { menor, mayor, valorObjetivo } = obtenerValoresCompartidos()
+    
+    if ((valorObjetivo !== null && valorObjetivo > 0 && !mayor && !menor) || 
+        ((mayor || menor) && (valorObjetivo === null || valorObjetivo <= 0))) {
+        alert("Por favor, asegúrate de ingresar un número objetivo mayor a 0 y seleccionar 'mayor' o 'menor'.");
+        return;
+    }
+
     // Llamar a la función tirarDados de cada objeto Dado
-    D4.tirarDados()
-    D6.tirarDados()
-    D8.tirarDados()
-    D10.tirarDados()
-    D12.tirarDados()
-    D20.tirarDados()
-    D100.tirarDados()
+    dados.forEach(dado => {
+        if (dado.veces > 0) {
+            dado.tirarDados();
+        }
+    })
 })
 
 // RESET - Función para reiniciar todos los inputs a su valor por defecto 
