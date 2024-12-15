@@ -69,12 +69,6 @@ class Dado {
                 resultado += modificador
                 resultados.push(resultado)
                 suma += resultado
-
-                // Verificar si el usuario ingresó un valor objetivo pero no seleccionó "mayor" o "menor"
-                if (valorObjetivo !== null && valorObjetivo > 0 && !mayor && !menor) {
-                    alert("No olvides eleccionar si la tirada debe ser mayor o menor que el número objetivo.");
-                    return // Detener ejecución si no marcó ninguna opción
-                }
     
                 if (valorObjetivo !== null && valorObjetivo > 0) {
                     let exito = (mayor && resultado >= valorObjetivo) || 
@@ -83,6 +77,15 @@ class Dado {
                     // Guardar el estado de la tirada
                     detalleExitos.push(`Tirada ${index + 1}: ${exito ? "¡Exitosa!" : "¡Fallida!"} (${resultado})`)
                 }
+            }
+
+            // Verificar si el usuario ingresó un valor objetivo pero no seleccionó "mayor" o "menor"
+            if (valorObjetivo > 0 && !mayor && !menor) {
+                alert("No olvides eleccionar si la tirada debe ser mayor o menor que el número objetivo.");
+                return // Detener ejecución si no marcó ninguna opción
+            } else if (mayor || menor && valorObjetivo == 0){
+                alert("No olvides eleccionar si la tirada debe ser mayor o menor que el número objetivo.");
+                return
             }
     
             // Construir HTML para mostrar resultados con todas las tiradas
