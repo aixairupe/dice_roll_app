@@ -11,49 +11,55 @@
 </head>
 <body>
     <h1 class="titulo">¡Bienvenidx a Dice-roll App!</h1>
-    <h2 class="subtitulo">Configurá tu tirada</h2>
-    <p class="instrucciones">¡Customizá tu tirada! <br> Para una sola tirada simple, apretá el botón del dado que querés tirar. <br> Si querés tirar varias veces el mismo dado, o elegir varios dados diferentes para la misma tirada, habilitá las Tiradas múltiples. <br> Usá reset para borrar todo.</p>
+    <h2 class="subtitulo">Customizá tu tirada</h2>
+    <p>
+        <ul class="instrucciones">
+            <li>Para tirar un solo dado, hacé click el botón del que quieras tirar.</li>
+            <li>Para tirar varias veces el mismo dado o elegir varios dados diferentes en la misma tirada, habilitá las Tiradas múltiples.</li>
+            <li>Configurá en el menú de abajo si querés que sume los resultados de cada dado, si tenés un número objetivo o modificador.</li>
+            <li>Usá el botón de Reset para borrar todo.</li>
+        </ul>
     <main>
         <div class="dados">
 
             <div class="tarjeta_dado" id="D4">
-                <img src="img/D4.png" alt="dado de 4 caras">
+                <img src="img/D4.png" alt="dado de 4 caras" id="img_d4">
                 <button class="boton_elegir" id="1D4">D4</button>
                 <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D4" min="0"></p>
             </div>
 
             <div class="tarjeta_dado" id="D6">
-                <img src="img/D6.png" alt="dado de 6 caras">
+                <img src="img/D6.png" alt="dado de 6 caras" id="img_d6">
                 <button class="boton_elegir" id="1D6">D6</button>
                 <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D6" min="0"></p>
             </div>
 
             <div class="tarjeta_dado" id="D8">
-                <img src="img/D8.png" alt="dado de 8 caras">
+                <img src="img/D8.png" alt="dado de 8 caras" id="img_d8">
                 <button class="boton_elegir" id="1D8">D8</button>
                 <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D8" min="0"></p>
             </div>
 
             <div class="tarjeta_dado" id="D10">
-                <img src="img/D10.png" alt="dado de 10 caras">
+                <img src="img/D10.png" alt="dado de 10 caras" id="img_d10">
                 <button class="boton_elegir" id="1D10">D10</button>
                 <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D10" min="0"></p>
             </div>
 
             <div class="tarjeta_dado" id="D12">
-                <img src="img/D12.png" alt="dado de 12 caras">
+                <img src="img/D12.png" alt="dado de 12 caras" id="img_d12">
                 <button class="boton_elegir" id="1D12">D12</button>
                 <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D12" min="0"></p>
             </div>
 
             <div class="tarjeta_dado" id="D20">
-                <img src="img/D20.png" alt="dado de 20 caras">
+                <img src="img/D20.png" alt="dado de 20 caras" id="img_d20">
                 <button class="boton_elegir" id="1D20">D20</button>
                 <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D20" min="0"></p>
             </div>
 
             <div class="tarjeta_dado" id="D100">
-                <img id="img_d100" src="img/D100.png" alt="dado porcentual">
+                <img src="img/D100.png" alt="dado porcentual" id="img_d100">
                 <button class="boton_elegir" id="1D100">D100</button>
                 <p class="input_veces">Cantidad: <input type="number" name="n_veces" id="veces_D100" min="0"></p>
             </div>
@@ -63,15 +69,19 @@
             <h4 class="subtitulo">Preferencias</h4>
             
             <div class="menu">
-                <p>
+                <p id="check_suma">
                     <input type="checkbox" name="sumar_resultados" id="sumatoria">Sumar resultados
                 </p>
                 <div id="num_objetivo">
                     <p>
-                        <input type="radio" name="n_o" id="mayor">Mayor que...
-                        <input type="radio" name="n_o" id="menor">Menor que...
+                        <span>
+                            <input type="radio" name="n_o" id="mayor">Mayor que...
+                        </span>
+                        <span>
+                            <input type="radio" name="n_o" id="menor">Menor que...
+                        </span>
                     </p>
-                    <p>
+                    <p id="check_mod">
                         Ingresá el valor: <input type="number" name="ingresa_valor" id="valor_objetivo" min="0">
                     </p> 
                 </div>

@@ -14,6 +14,7 @@
     --main-light-green: #56c789;
     --main-dark-green: #48463F;
     --main-bordeaux: #4D2128;
+    --main-dark-lila: #312A2F;
 }
 
 
@@ -37,19 +38,28 @@ title, .titulo, .subtitulo {
     font-family: "Amaranth", sans-serif;
     font-size: xx-large;
     justify-self: center;
+    margin-top: 0;
 }
 
-.instrucciones, .resultado, p, ul, h4, h3{
+.resultado, p, ul, h4, h3{
     justify-self: center;
     margin: 5px;
     font-size: larger;
 }
 
+.instrucciones{
+    font-size: x-large;
+    list-style: none;
+}
+
+li{
+    padding: 15px;
+}
 
 /*Botones*/
 
 button{
-    background-color: var(--main-creamy);
+    background-color: var(--main-dark-pink);
     border-radius: 8px;
     justify-self: center;
     width: 75px;
@@ -57,14 +67,18 @@ button{
     cursor: pointer;
     border: outset;
     font-family: "Josefin Sans", serif;
+    color: var(--main-lila);
+    border-color: var(--main-dark-lila);
 }
 
 #dice_roll, #reset {
-    background-color: var(--main-dark-pink);
-    color: var(--main-lila);
+    background-color: var(--main-pink);
+    color: var(--main-bordeaux);
     width: auto;
     height: auto;
     font-size: x-large;
+    border-color: var(--main-dark-pink);
+    padding-top: 3px;
 }
 
 
@@ -77,10 +91,10 @@ button{
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 225px), 3fr));
     gap: 20px;
     grid-auto-flow: dense;
-    background-color: var(--main-grey-green);
+    background-color: var(--main-bordeaux);
     border-radius: 15px;
     padding: 15px;
-    border: 3px inset var(--main-dark-green);
+    border: 3px inset var(--main-dark-lila);
 }
 
 .tarjeta_dado{
@@ -90,9 +104,10 @@ button{
     justify-content: center;
     align-content: center;
     justify-items: center;
-    background-color: var(--main-pink);
+    background-color: var(--main-creamy);
     border-radius: 10px;
     border: outset;
+    border-color: var(--main-dark-lila);
 }
 
 img{
@@ -102,12 +117,21 @@ img{
 }
 
 #img_d100{
-    width: 175px;
+    width: 190px;
     max-height: auto;
+}
+
+#img_d8, #img_d10, #img_d20 {
+    max-width: 140px;
 }
 
 input{
     max-width: 70px;
+    margin: 10px;
+}
+
+#mayor, #menor{
+    display: inline-block;
 }
 
 .boton_elegir{
@@ -129,9 +153,9 @@ input{
     border: 3px outset var(--main-dark-green);
     border-radius: 10px;
     padding: 20px;
-    min-width: 75%;
+    min-width: 500px;
     font-size: larger;
-    gap: 15%;
+    gap: auto;
 }
 
 .resultado{
@@ -139,10 +163,19 @@ input{
     gap: 10px;
 }
 
-#num_objetivo {
-    display: flex;
-    align-self: center;
-    
+#num_objetivo p {
+    display: flex; /* Flexbox para mantener los elementos en línea */
+    gap: 10px; /* Espaciado entre los bloques */
+    flex-wrap: wrap; /* Permitir que los bloques se muevan si no hay espacio */
+    align-items: center; /* Alinear verticalmente los elementos */
+    justify-content: center;
+    min-width: 200px;
+}
+
+#num_objetivo span, #check_suma, #check_mod {
+    display: inline-flex; /* Trata al par (input + texto) como un bloque inline */
+    align-items: center; /* Alinear el texto con el input verticalmente */
+    gap: 5px; /* Espaciado entre el input y el texto */
 }
 
 .resultado_valores, .resultado_suma, .resultado_exitos, #resultado_dado{

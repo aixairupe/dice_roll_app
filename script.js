@@ -1,7 +1,7 @@
 class Dado {
     constructor(caras, veces = 1) {
-        this.caras = caras;
-        this.veces = veces;
+        this.caras = caras
+        this.veces = veces
     }
 
     tirarDado() {
@@ -45,37 +45,43 @@ class Dado {
     }
 
     tirarDados() {
-        let checkbox = document.getElementById("sumatoria");
+        let checkbox = document.getElementById("sumatoria")
         let resultados = [];
-        let suma = 0;
-        let menor = document.getElementById("menor").checked;
-        let mayor = document.getElementById("mayor").checked;
-        let valorObjetivoElement = document.getElementById("valor_objetivo");
-        let modificador = parseFloat(document.getElementById("mods").value) || 0;
-    
+        let suma = 0
+        let totalGlobalLocal = 0 // Suma total acumulada de todos los dados
+        let menor = document.getElementById("menor").checked
+        let mayor = document.getElementById("mayor").checked
+        let valorObjetivoElement = document.getElementById("valor_objetivo")
+        let modificador = parseInt(document.getElementById("mods").value) || 0
+        
+        let valorObjetivo = valorObjetivoElement && valorObjetivoElement.value !== "" ?  //3er commit
+        parseInt(valorObjetivoElement.value) : null
+
         if (!valorObjetivoElement || valorObjetivoElement.value === "") {
-            valorObjetivoElement = null;
+            valorObjetivoElement = null
         }
-    
-        let exito = false;
-        let detalleExitos = [];
+        
+        let detalleExitos = []
     
         if (this.veces > 0) { // Verificar si la cantidad de veces es mayor que 0
             for (let index = 0; index < this.veces; index++) {
-                let resultado = Math.floor((Math.random() * this.caras) + 1);
-                resultado += modificador;
-                resultados.push(resultado);
-                suma += resultado;
+                let resultado = Math.floor((Math.random() * this.caras) + 1)
+                resultado += modificador
+                resultados.push(resultado)
+                suma += resultado
+
+                // Verificar si el usuario ingresó un valor objetivo pero no seleccionó "mayor" o "menor"
+                if (valorObjetivo !== null && valorObjetivo > 0 && !mayor && !menor) {
+                    alert("No olvides eleccionar si la tirada debe ser mayor o menor que el número objetivo.");
+                    return // Detener ejecución si no marcó ninguna opción
+                }
     
-                if (valorObjetivoElement) {
-                    let valorObjetivo = parseFloat(valorObjetivoElement.value);
-                    if (mayor && resultado >= valorObjetivo) {
-                        detalleExitos.push(`Tirada ${index + 1}: Exitosa (${resultado})`);
-                    } else if (menor && resultado <= valorObjetivo) {
-                        detalleExitos.push(`Tirada ${index + 1}: Exitosa (${resultado})`);
-                    } else {
-                        detalleExitos.push(`Tirada ${index + 1}: Fallida (${resultado})`);
-                    }
+                if (valorObjetivo !== null && valorObjetivo > 0) {
+                    let exito = (mayor && resultado >= valorObjetivo) || 
+                                (menor && resultado <= valorObjetivo)
+                    
+                    // Guardar el estado de la tirada
+                    detalleExitos.push(`Tirada ${index + 1}: ${exito ? "¡Exitosa!" : "¡Fallida!"} (${resultado})`)
                 }
             }
     
@@ -83,20 +89,28 @@ class Dado {
             let resultadoHTML = `
                 <div class="resultado-dado">
                     <p class="resultado_header">Resultados del D${this.caras}:</p>
-                    <p class="resultado_valores">Resultados: ${resultados.join(", ")}</p>`;
+                    <p class="resultado_valores">${resultados.join(", ")}</p>`
     
             if (checkbox.checked) {
                 resultadoHTML += `
-                    <p class="resultado_suma">En total suman: ${suma}</p>
-                    <p class="resultado_estado">Tu tirada fue: ${mayor && suma >= valorObjetivo || menor && suma <= valorObjetivo ? "¡Exitosa!" : "¡Fallida! :C"}</p>`;
+                    <p class="resultado_suma">En total suman: ${suma}</p>`
+                // Imprimir estado solo si los parámetros son válidos
+                if (valorObjetivo !== null && valorObjetivo > 0 && (mayor || menor)) {
+                    resultadoHTML += `
+                        <p class="resultado_estado">Tu tirada fue: ${(mayor && suma >= valorObjetivo) || (menor && suma <= valorObjetivo) ? "¡Exitosa!" : "¡Fallida!"}</p>`
+                }    
             } else if (detalleExitos.length > 0) {
                 resultadoHTML += `
                     <p class="resultado_detallado">Recuento de tiradas:</p>
-                    <p class="resultado_exitos">${detalleExitos.join("<br>")}</p>`;
+                    <p class="resultado_exitos">${detalleExitos.join("<br>")}</p>`
             }
     
-            resultadoHTML += `</div>`;
-            document.getElementById("resultado_total").innerHTML += resultadoHTML;
+            resultadoHTML += `</div>`
+
+            document.getElementById("resultado_total").innerHTML += resultadoHTML
+
+            document.getElementById("resultado_total").scrollIntoView({ behavior: 'smooth', block: 'center' })
+
         }
     }
 }
@@ -118,12 +132,13 @@ function validarInputs() {
     if (parseFloat(valorObjetivo.value) < 0) { 
         valorObjetivo.value = 0
     } 
+
     // Validar los inputs de cantidad 
     inputsCantidad.forEach(input => { 
         if (parseFloat(input.value) < 0) { 
             input.value = 0
         } 
-    }); 
+    });
 } 
 
 // Asignar validaciones a los eventos de cambio y entrada 
@@ -161,10 +176,9 @@ document.getElementById("D12").querySelector('.boton_elegir').addEventListener("
 document.getElementById("D20").querySelector('.boton_elegir').addEventListener("click", function() { D20.tirarDado(); }) 
 document.getElementById("D100").querySelector('.boton_elegir').addEventListener("click", function() { D100.tirarDado(); })
 
-// Asignar el botón a la función de tirada de cada dado
+// TIRAR DADOS - Asignar el botón a la función de tirada múltiple
 document.getElementById("dice_roll").addEventListener("click", function() {
-    document.getElementById("resultado_total").innerHTML = "" 
-    // Limpiar resultados previos
+    document.getElementById("resultado_total").innerHTML = "" // Limpiar resultados previos
 
     // Obtener los valores de los inputs de cantidad y actualizar los objetos Dado
     D4.veces = parseInt(document.getElementById("veces_D4").value) || 0
@@ -185,7 +199,7 @@ document.getElementById("dice_roll").addEventListener("click", function() {
     D100.tirarDados()
 })
 
-// Función para reiniciar todos los inputs a su valor por defecto 
+// RESET - Función para reiniciar todos los inputs a su valor por defecto 
 document.getElementById("reset").addEventListener("click", function() { 
     //Inputs de cantidad
     document.getElementById("veces_D4").value = 0 
@@ -210,3 +224,5 @@ document.getElementById("reset").addEventListener("click", function() {
     document.getElementById("tiradas_multiples").checked = false
     toggleCantidadInputs()
 })
+
+//NEXT: conseguir que sume el total de todas las tiradas de dados que se hagan
