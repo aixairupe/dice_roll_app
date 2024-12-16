@@ -141,21 +141,25 @@ input{
 /*Configuraciones de la tirada*/
 
 .menu_resultados {
-    display: grid;
     gap: 15px;
+    justify-items: center;
+
 }
 
 .menu, .resultado{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
     border: 3px outset var(--main-dark-green);
     border-radius: 10px;
     padding: 20px;
     min-width: 500px;
     font-size: larger;
-    gap: auto;
+}
+
+.menu{
+    justify-content: space-between;
+    width: 100%;
 }
 
 .resultado{

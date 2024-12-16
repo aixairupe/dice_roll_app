@@ -26,9 +26,9 @@ class Dado {
 
         let resultadoHTML = ` 
         <div class="resultado_dado"> 
-        <p class="resultado_header">Resultado del dado de ${this.caras} caras:</p> 
-        <p class="resultado_valores">Tirada: ${resultadoTirada + modificador}</p>` 
-    
+        <p class="resultado_header">Resultado del D${this.caras}:</p> 
+        <p class="resultado_valores">${resultadoTirada} ${modificador >= 0 ? '+' : '-'} ${Math.abs(modificador)} = ${resultadoTirada + modificador}</p>`
+
         if (valorObjetivo !== null && valorObjetivo > 0) {
             let exito = (mayor && resultadoFinal >= valorObjetivo) || 
                         (menor && resultadoFinal <= valorObjetivo);
