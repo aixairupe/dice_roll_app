@@ -27,7 +27,10 @@ class Dado {
         let resultadoHTML = ` 
         <div class="resultado_dado"> 
         <p class="resultado_header">Resultado del D${this.caras}:</p> 
-        <p class="resultado_valores">${resultadoTirada} ${modificador >= 0 ? '+' : '-'} ${Math.abs(modificador)} = ${resultadoTirada + modificador}</p>`
+        <p class="resultado_valores">
+            Tirada: ${resultadoTirada} 
+            ${modificador !== 0 ? (modificador > 0 ? `+ ${modificador}` : `- ${Math.abs(modificador)}`) + ` = ${resultadoTirada + modificador}` : ''}
+        </p>`
 
         if (valorObjetivo !== null && valorObjetivo > 0) {
             let exito = (mayor && resultadoFinal >= valorObjetivo) || 
@@ -51,16 +54,20 @@ class Dado {
         let suma = 0
         let modificador = parseInt(document.getElementById("mods").value) || 0
     
-         // Obtener valores compartidos
+        // Obtener valores compartidos
         const { menor, mayor, valorObjetivo } = obtenerValoresCompartidos()
 
         let detalleExitos = []
     
         if (this.veces > 0) {
             for (let index = 0; index < this.veces; index++) {
-                let resultado = Math.floor((Math.random() * this.caras) + 1)
-                resultado += modificador
-                resultados.push(resultado)
+                let resultadoBase = Math.floor((Math.random() * this.caras) + 1)
+                let resultado = resultadoBase + modificador
+                resultados.push(
+                    modificador !==0
+                    ? `${resultadoBase} ${modificador > 0 ? `+` : `-`} ${Math.abs(modificador)} = ${resultado}`
+                    : `${resultadoBase}`
+                )
                 suma += resultado
 
                 if (valorObjetivo !== null && valorObjetivo > 0) {
@@ -76,7 +83,7 @@ class Dado {
             let resultadoHTML = `
             <div class="resultado-dado">
                 <p class="resultado_header">Resultados del D${this.caras}:</p>
-                <p class="resultado_valores">${resultados.join(", ")}</p>`
+                <p class="resultado_valores">${resultados.join("<br>")}</p>`
 
             if (checkbox.checked) {
                 resultadoHTML += `
